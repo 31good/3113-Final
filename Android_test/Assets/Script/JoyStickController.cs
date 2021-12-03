@@ -9,7 +9,14 @@ public class JoyStickController : MonoBehaviour
     private float GameObjectRotation;
     public bool FacingRight =true;
     Transform weapon;
+
+    public float speed=5;
+    private BoxCollider2D boxCollider;
     // Update is called once per frame
+    private void Start(){
+        boxCollider = GetComponent<BoxCollider2D>();
+    }
+    
     void Update()
     {
         foreach(Transform child in this.transform){
@@ -26,11 +33,37 @@ public class JoyStickController : MonoBehaviour
     {
         float hoz = moveJoystick.Horizontal;
         float ver = moveJoystick.Vertical;
-        Vector2 convertedXY = ConvertWithCamera(Camera.main.transform.position, hoz, ver);
-        Vector3 direction = new Vector3(convertedXY.x,convertedXY.y, 0).normalized;
+        RaycastHit2D hit=Physics2D.BoxCast(transform.position,boxCollider.size,0,new Vector2(0,ver),Mathf.Abs(ver*Time.deltaTime*speed),LayerMask.GetMask("wall"));
+        RaycastHit2D hit_2=Physics2D.BoxCast(transform.position,boxCollider.size,0,new Vector2(hoz,0),Mathf.Abs(hoz*Time.deltaTime*speed),LayerMask.GetMask("wall"));
+        if(hit.collider==null){
+            transform.Translate(0,speed*ver*Time.deltaTime,0);
+        }
+        if(hit_2.collider==null){
+            if(FacingRight){
+                transform.Translate(speed*hoz*Time.deltaTime,0,0);
+            }
+            else{
+                transform.Translate(speed*-1*hoz*Time.deltaTime,0,0);
+            }
+        }
+        /*
+        Vector3 direction = new Vector3(0,0,0);
+        if(hit.collider==null && hit_2.collider==null){
+            Vector2 convertedXY = ConvertWithCamera(Camera.main.transform.position, hoz, ver);
+            direction = new Vector3(convertedXY.x,convertedXY.y, 0).normalized;
+        }
+        else if(hit.collider!=null && hit_2.collider!=null){return;}
+        else if(hit.collider!=null){
+            Vector2 convertedXY = ConvertWithCamera(Camera.main.transform.position, hoz, ver);
+            direction = new Vector3(convertedXY.x,Camera.main.transform.position.y, 0).normalized;
+        }
+        else if(hit_2.collider!=null){
+            Vector2 convertedXY = ConvertWithCamera(Camera.main.transform.position, hoz, ver);
+            direction = new Vector3(Camera.main.transform.position.x,convertedXY.y, 0).normalized;
+        }*/
         if(hoz<0&&FacingRight){Flip();}
         if(hoz>0&&!FacingRight){Flip();}
-        transform.Translate(direction * 0.02f, Space.World);
+        //transform.Translate(direction * 0.02f, Space.World);
     }
 
 
