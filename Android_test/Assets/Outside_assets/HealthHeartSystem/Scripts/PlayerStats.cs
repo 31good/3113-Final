@@ -64,4 +64,10 @@ public class PlayerStats : MonoBehaviour
         if (onHealthChangedCallback != null)
             onHealthChangedCallback.Invoke();
     }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.tag=="bullet"){
+            TakeDamage(0.5f);
+        }    
+    }   
 }
