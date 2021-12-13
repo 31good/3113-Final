@@ -14,6 +14,7 @@ public class meleeenemy : MonoBehaviour
     bool if_attack = false;
     bool could_damage = false;
     bool if_do_damage = false;
+    bool if_die = false;
     enum State{
         idle,
         move,
@@ -26,10 +27,12 @@ public class meleeenemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   if (health<= 0){
+            if_die = true;
             _animator.SetTrigger("die");
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
         }
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
-        if(distanceFromPlayer < detectrange&&distanceFromPlayer > attack_range){
+        if(distanceFromPlayer < detectrange&&distanceFromPlayer > attack_range&&if_die == false){
             if(if_attack == true){
                 print(1);
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
@@ -41,7 +44,7 @@ public class meleeenemy : MonoBehaviour
             }
 
         }
-        else if (distanceFromPlayer <= attack_range){
+        else if (distanceFromPlayer <= attack_range && if_die == false){
             int attack_ram = Random.Range(1,3);
             if (attack_ram == 1){
                 _animator.SetTrigger("attack1");
