@@ -12,6 +12,7 @@ public class meleeenemy : MonoBehaviour
     private Transform player;
     Animator _animator;
     bool if_attack = false;
+    bool could_damage = false;
     bool if_do_damage = false;
     enum State{
         idle,
@@ -30,6 +31,7 @@ public class meleeenemy : MonoBehaviour
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
         if(distanceFromPlayer < detectrange&&distanceFromPlayer > attack_range){
             if(if_attack == true){
+                print(1);
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
             }
             else{
@@ -68,7 +70,7 @@ public class meleeenemy : MonoBehaviour
     }  
 
     void OnTriggerEnter2D(Collision2D other){
-        if(if_attack == true && if_do_damage == false){
+        if(if_attack == true && if_do_damage == false && could_damage == true){
             player.GetComponent<PlayerStats>().TakeDamage(0.5f);
             if_do_damage = true;
         }
@@ -84,5 +86,9 @@ public class meleeenemy : MonoBehaviour
     void melee_trigger_off(){
         if_attack = false;
         if_do_damage = false;
+        could_damage = false;
+    }
+    void could_do_damage(){
+        could_damage = true;
     }
 }
