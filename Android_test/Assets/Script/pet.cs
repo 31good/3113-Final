@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class pet : MonoBehaviour
 {
+    public int roomIndex;
     public int pet_type; // 1 follow 2 attack 3 pick up
     public float speed;
     public float stop_distance;

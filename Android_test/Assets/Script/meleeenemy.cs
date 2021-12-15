@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class meleeenemy : MonoBehaviour
 {
+    public int roomIndex;
     public float speed;
     public float detectrange;
     public float attack_range;
@@ -15,6 +16,8 @@ public class meleeenemy : MonoBehaviour
     bool could_damage = false;
     bool if_do_damage = false;
     bool if_die = false;
+
+
     enum State{
         idle,
         move,
@@ -36,6 +39,28 @@ public class meleeenemy : MonoBehaviour
             if_die = true;
             _animator.SetTrigger("die");
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
+
+            if (roomIndex==1)
+            {
+                PlayerManager.GetInstance().enemys001.Remove(gameObject.GetComponent<SpriteRenderer>());
+                if (PlayerManager.GetInstance().enemys001.Count==0)
+                {
+                    Debug.Log("room 1 enemy clear!");
+                    //µôÂäµÀ¾ß
+                   int itemType = Random.Range(0,3);
+
+                }
+            }
+            if (roomIndex == 2)
+            {
+                PlayerManager.GetInstance().enemys002.Remove(gameObject.GetComponent<SpriteRenderer>());
+                if (PlayerManager.GetInstance().enemys002.Count ==0)
+                {
+                    Debug.Log("room 2 enemy clear!");
+                }
+            }
+
+            Destroy(this.gameObject);
         }
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
         if(distanceFromPlayer < detectrange&&distanceFromPlayer > attack_range&&if_die == false){

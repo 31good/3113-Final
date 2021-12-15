@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class rangeenemy : MonoBehaviour
 {
+    public int roomIndex;
     public float speed;
     public float detectrange;
     public float shootingrange;
