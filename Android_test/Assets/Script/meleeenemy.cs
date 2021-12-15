@@ -25,6 +25,12 @@ public class meleeenemy : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
     // Update is called once per frame
+    public void taken_damage(float damage){
+        health -= damage;
+        print(2);
+        Knockback();
+        _animator.SetTrigger("hit");
+    }
     void Update()
     {   if (health<= 0){
             if_die = true;
@@ -56,7 +62,6 @@ public class meleeenemy : MonoBehaviour
         else{
             _animator.SetTrigger("idle");
         }
-
     }
     void rotation(){
         if (player.transform.position.x-transform.position.x <= 0){
@@ -72,15 +77,11 @@ public class meleeenemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attack_range);
     }  
 
-    void OnTriggerEnter2D(Collision2D other){
-        if(if_attack == true && if_do_damage == false && could_damage == true){
+    private void OnTriggerEnter2D(Collider2D other){
+        if(if_attack == true && if_do_damage == false && could_damage == true && other.gameObject.tag == "Player"){
             player.GetComponent<PlayerStats>().TakeDamage(0.5f);
             if_do_damage = true;
         }
-    }
-    void taken_damage(float damage){
-        health -= damage;
-        _animator.SetTrigger("hit");
     }
     void melee_trigger_on(){
         rotation();
@@ -93,5 +94,12 @@ public class meleeenemy : MonoBehaviour
     }
     void could_do_damage(){
         could_damage = true;
+    }
+    void Knockback() { 
+        float x_distance = player.position.x - this.transform.position.x;
+        float y_distance = player.position.y - this.transform.position.y;
+        float hypotenuse = Mathf.Sqrt(x_distance*x_distance + y_distance*y_distance);
+        Vector2 Knockback = new Vector2(5*(this.transform.position.x - x_distance/hypotenuse), 5*(this.transform.position.y -y_distance/hypotenuse));
+        transform.position = Vector2.MoveTowards(this.transform.position, Knockback, 15*Time.deltaTime); 
     }
 }

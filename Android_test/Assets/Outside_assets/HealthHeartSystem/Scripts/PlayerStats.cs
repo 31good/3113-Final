@@ -38,6 +38,8 @@ public class PlayerStats : MonoBehaviour
     public int key_count=0;
     public TextMeshProUGUI coin_count_text;
     public int coin_count=0;
+    public float damage = 10f;
+    private bool if_attack = true;
     private void Update() {
         key_count_text.text="x"+key_count;
         coin_count_text.text="x"+coin_count;
@@ -97,6 +99,12 @@ public class PlayerStats : MonoBehaviour
         if(other.gameObject.tag=="coin"){
             coin_count+=1;
             Destroy(other.gameObject);
+        }
+        if(other.gameObject.tag == "melee_enemy" && if_attack == true){
+            other.gameObject.GetComponent<meleeenemy>().taken_damage(damage);
+        }
+        if(other.gameObject.tag == "range_enemy" && if_attack == true){
+            other.gameObject.GetComponent<rangeenemy>().taken_damage(damage);
         }
     }
 }

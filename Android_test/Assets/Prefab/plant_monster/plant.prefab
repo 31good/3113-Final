@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: -3043194656972117005}
   m_Layer: 0
   m_Name: plant
-  m_TagString: Untagged
+  m_TagString: range_enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
   shootingrange: 5
   bullet: {fileID: 23231444687620901, guid: 04620eafa4c14314b83ce70ba34a65a8, type: 3}
   bullet_pos: {fileID: 2598437320812649762}
-  firerate: 1
+  health: 50
 --- !u!1 &3846451706195172059
 GameObject:
   m_ObjectHideFlags: 0

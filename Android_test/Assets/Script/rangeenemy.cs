@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shootenemy : MonoBehaviour
+public class rangeenemy : MonoBehaviour
 {
     public float speed;
     public float detectrange;
@@ -13,7 +13,7 @@ public class shootenemy : MonoBehaviour
     private float nextfiretime;
     private Transform player;
     Animator _animator;
-    bool if_attack = false;
+    bool if_attack = true;
     Transform curr_bullet_pos;
     enum State{
         idle,
@@ -26,6 +26,11 @@ public class shootenemy : MonoBehaviour
         curr_bullet_pos = bullet_pos.transform;
     }
     // Update is called once per frame
+     public void taken_damage(float damage){
+        health -= damage;
+        Knockback();
+        _animator.SetTrigger("hit");
+     }
     void Update()
     {   
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
@@ -72,5 +77,12 @@ public class shootenemy : MonoBehaviour
     }
     void end_stop1(){
         if_attack = false;
+    }
+    void Knockback() { 
+        float x_distance = player.position.x - this.transform.position.x;
+        float y_distance = player.position.y - this.transform.position.y;
+        float hypotenuse = Mathf.Sqrt(x_distance*x_distance + y_distance*y_distance);
+        Vector2 Knockback = new Vector2(5*(this.transform.position.x - x_distance/hypotenuse), 5*(this.transform.position.y -y_distance/hypotenuse));
+        transform.position = Vector2.MoveTowards(this.transform.position, Knockback, 15*Time.deltaTime); 
     }
 }
