@@ -5,7 +5,7 @@ using UnityEngine;
 public class JoyStickController : MonoBehaviour
 {
     public FixedJoystick moveJoystick;
-    public FixedJoystick lookJoystick;
+    //public FixedJoystick lookJoystick;
     private float GameObjectRotation;
     public bool FacingRight =true;
     Transform weapon;
@@ -26,7 +26,7 @@ public class JoyStickController : MonoBehaviour
             }
         }
         UpdateMoveJoystick();
-        UpdateLookJoystick();
+        //UpdateLookJoystick();
     }
 
     void UpdateMoveJoystick()
@@ -68,7 +68,7 @@ public class JoyStickController : MonoBehaviour
 
 
 
-    void UpdateLookJoystick()
+    /*void UpdateLookJoystick()
     {
         float hoz = lookJoystick.Horizontal;
         float ver = lookJoystick.Vertical;
@@ -86,7 +86,7 @@ public class JoyStickController : MonoBehaviour
         else if(hoz>0&&!FacingRight){
             Flip();
         }
-    }
+    }*/
 
     private void Flip()
 	{
