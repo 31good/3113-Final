@@ -86,7 +86,6 @@ public class JoyStickController : MonoBehaviour
                 //GameObjectRotation=hoz+ver*90;
                 //print(GameObjectRotation);
                 float degrees = Mathf.Rad2Deg*(Mathf.Atan2(ver,hoz));
-                print(degrees);
                 StartCoroutine(Rotate(degrees,1));
                 //print(GameObjectRotation);
                 //weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation);
@@ -95,8 +94,7 @@ public class JoyStickController : MonoBehaviour
                 //GameObjectRotation=hoz+ver*-90;
                 //print(GameObjectRotation);
                 float degrees = Mathf.Rad2Deg*(Mathf.Atan2(ver,hoz));
-                print(degrees);
-                StartCoroutine(Rotate(degrees,1.3f));
+                StartCoroutine(Rotate(degrees,0.4f));
                 //weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation); 
             }
         }
@@ -139,8 +137,8 @@ public class JoyStickController : MonoBehaviour
     float passedTime = 0f;
     //print(degrees+15-135);
     //print(degrees-15-135);
-    var startRotation = Quaternion.Euler(0f,0f,degrees +35);
-    var targetRotation = Quaternion.Euler(0, 0, degrees-35);
+    var startRotation = Quaternion.Euler(0f,0f,degrees +80);
+    var targetRotation = Quaternion.Euler(0f, 0f, degrees-80);
 
     while(passedTime < duration)
         {
