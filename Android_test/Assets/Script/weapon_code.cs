@@ -36,4 +36,15 @@ public class weapon_code : MonoBehaviour
             if_damage = true;
         }
     }
+    private void OnTriggerStay2D(Collider2D other) {
+        if(other.gameObject.tag == "melee_enemy" && is_attacking == true && if_damage == false){
+            other.gameObject.GetComponent<meleeenemy>().taken_damage(damage);
+            if_damage = true;
+            print("12345");
+        }
+        if(other.gameObject.tag == "range_enemy" && is_attacking == true && if_damage == false){
+            other.gameObject.GetComponent<rangeenemy>().taken_damage(damage);
+            if_damage = true;
+        }
+    }
 }
