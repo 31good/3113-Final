@@ -12,6 +12,9 @@ public class PlayerStats : MonoBehaviour
 
     #region Sigleton
     private static PlayerStats instance;
+    public AnimationClip _walk;
+    public Animation _Legs;
+    private Rigidbody2D rig;
     public static PlayerStats Instance
     {
         get
@@ -105,6 +108,17 @@ public class PlayerStats : MonoBehaviour
         }
         if(other.gameObject.tag == "range_enemy" && if_attack == true){
             other.gameObject.GetComponent<rangeenemy>().taken_damage(damage);
+        }
+    }
+    void Start ()
+    {
+        rig = gameObject.GetComponent<Rigidbody2D>();
+	}
+    void FixedUpdate(){
+        if(rig.velocity.magnitude != 0){
+            print("walk");
+            _Legs.clip = _walk;
+            _Legs.Play();
         }
     }
 }
