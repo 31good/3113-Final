@@ -9,7 +9,7 @@ public class JoyStickController : MonoBehaviour
     private float GameObjectRotation;
     public bool FacingRight =true;
     Transform weapon;
-    bool isRotating=false;
+    public bool isRotating=false;
     public float speed=5;
     private BoxCollider2D boxCollider;
     // Update is called once per frame
@@ -19,6 +19,7 @@ public class JoyStickController : MonoBehaviour
     
     void Update()
     {
+        print(isRotating);
         foreach(Transform child in this.transform){
             //print(child.tag);
             if(child.tag=="Weapon"){
@@ -165,7 +166,6 @@ public class JoyStickController : MonoBehaviour
 
     // just to be sure
     weapon.transform.rotation = targetRotation;
-
     isRotating = false;
     }
     

@@ -121,7 +121,7 @@ public class meleeenemy : MonoBehaviour
         float x_distance = player.position.x - this.transform.position.x;
         float y_distance = player.position.y - this.transform.position.y;
         float hypotenuse = Mathf.Sqrt(x_distance*x_distance + y_distance*y_distance);
-        Vector2 Knockback = new Vector2(5*(this.transform.position.x - x_distance/hypotenuse), 5*(this.transform.position.y -y_distance/hypotenuse));
+        Vector2 Knockback = new Vector2(30*(this.transform.position.x - x_distance/hypotenuse), 30*(this.transform.position.y-y_distance/hypotenuse));
         transform.position = Vector2.MoveTowards(this.transform.position, Knockback, 15*Time.deltaTime); 
     }
     void destroy_enemy(){
