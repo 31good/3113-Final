@@ -16,6 +16,7 @@ public class meleeenemy : MonoBehaviour
     bool could_damage = false;
     bool if_do_damage = false;
     bool if_die = false;
+    int count_call = 0;
     enum State{
         idle,
         move,
@@ -35,7 +36,10 @@ public class meleeenemy : MonoBehaviour
     void Update()
     {   if (health<= 0){
             if_die = true;
-            _animator.SetTrigger("die");
+            if (count_call == 0){
+                _animator.SetTrigger("die");
+                count_call+=1;
+            }
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
             if (roomIndex==1)
             {
@@ -54,8 +58,6 @@ public class meleeenemy : MonoBehaviour
                     Debug.Log("room 2 enemy clear!");
                 }
             }
-
-            Destroy(this.gameObject,5f);
         }
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
         if(distanceFromPlayer < detectrange&&distanceFromPlayer > attack_range&&if_die == false){
@@ -121,5 +123,8 @@ public class meleeenemy : MonoBehaviour
         float hypotenuse = Mathf.Sqrt(x_distance*x_distance + y_distance*y_distance);
         Vector2 Knockback = new Vector2(5*(this.transform.position.x - x_distance/hypotenuse), 5*(this.transform.position.y -y_distance/hypotenuse));
         transform.position = Vector2.MoveTowards(this.transform.position, Knockback, 15*Time.deltaTime); 
+    }
+    void destroy_enemy(){
+        Destroy(gameObject);
     }
 }
