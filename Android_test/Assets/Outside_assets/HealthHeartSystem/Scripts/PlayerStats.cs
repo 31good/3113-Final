@@ -15,7 +15,9 @@ public class PlayerStats : MonoBehaviour
     public AnimationClip _walk;
     public Animation _Legs;
     private Rigidbody2D rig;
+    private Vector3 pre_position;
     public static PlayerStats Instance
+
     {
         get
         {
@@ -113,9 +115,12 @@ public class PlayerStats : MonoBehaviour
     void Start ()
     {
         rig = gameObject.GetComponent<Rigidbody2D>();
+        pre_position = gameObject.transform.position;
 	}
     void FixedUpdate(){
-        if(rig.velocity.magnitude != 0){
+        print("walk1");
+        if(gameObject.transform.position != pre_position){
+            pre_position = gameObject.transform.position;
             print("walk");
             _Legs.clip = _walk;
             _Legs.Play();
