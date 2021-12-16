@@ -86,7 +86,7 @@ public class JoyStickController : MonoBehaviour
                 //GameObjectRotation=hoz+ver*90;
                 //print(GameObjectRotation);
                 float degrees = Mathf.Rad2Deg*(Mathf.Atan2(ver,hoz));
-                StartCoroutine(Rotate(degrees,1));
+                StartCoroutine(Rotate(degrees,0.4f));
                 //print(GameObjectRotation);
                 //weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation);
             }
