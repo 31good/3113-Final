@@ -14,6 +14,7 @@ public class PlayerStats : MonoBehaviour
     private static PlayerStats instance;
     public AnimationClip _walk;
     public Animation _Legs;
+    public GameObject hit_body;
     private Rigidbody2D rig;
     private Vector3 pre_position;
     public static PlayerStats Instance
@@ -48,6 +49,7 @@ public class PlayerStats : MonoBehaviour
     private void Update() {
         key_count_text.text="x"+key_count;
         coin_count_text.text="x"+coin_count;
+        hit_body.SetActive(false);
     }
 
     public void Heal(float health)
@@ -57,7 +59,8 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void TakeDamage(float dmg)
-    {
+    {   
+        hit_body.SetActive(true);
         health -= dmg;
         ClampHealth();
     }
@@ -86,6 +89,7 @@ public class PlayerStats : MonoBehaviour
         if(other.gameObject.tag=="bullet"){
             TakeDamage(0.5f);
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -110,6 +114,7 @@ public class PlayerStats : MonoBehaviour
     {
         rig = gameObject.GetComponent<Rigidbody2D>();
         pre_position = gameObject.transform.position;
+        hit_body.SetActive(false);
 	}
     void FixedUpdate(){
         print("walk1");
