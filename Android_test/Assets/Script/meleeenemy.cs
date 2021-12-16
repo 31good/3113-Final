@@ -16,7 +16,8 @@ public class meleeenemy : MonoBehaviour
     bool could_damage = false;
     bool if_do_damage = false;
     bool if_die = false;
-    int count_call = 0;
+
+
     enum State{
         idle,
         move,
@@ -29,62 +30,81 @@ public class meleeenemy : MonoBehaviour
     // Update is called once per frame
     public void taken_damage(float damage){
         health -= damage;
-        print(2);
         Knockback();
         _animator.SetTrigger("hit");
     }
     void Update()
-    {   if (health<= 0){
+    {
+        if (health <= 0)
+        {
             if_die = true;
-            if (count_call == 0){
-                _animator.SetTrigger("die");
-                count_call+=1;
-            }
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
-            if (roomIndex==1)
-            {
-                PlayerManager.GetInstance().enemys001.Remove(gameObject.GetComponent<SpriteRenderer>());
-                if (PlayerManager.GetInstance().enemys001.Count==0)
-                {
-                    Debug.Log("room 1 enemy clear!");
-                    int itemType = Random.Range(0,3);
-                }
-            }
-            if (roomIndex == 2)
-            {
-                PlayerManager.GetInstance().enemys002.Remove(gameObject.GetComponent<SpriteRenderer>());
-                if (PlayerManager.GetInstance().enemys002.Count ==0)
-                {
-                    Debug.Log("room 2 enemy clear!");
-                }
-            }
+            _animator.SetTrigger("die");
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            Invoke("GoDie", 1);
         }
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
-        if(distanceFromPlayer < detectrange&&distanceFromPlayer > attack_range&&if_die == false){
-            if(if_attack == true){
+        if (distanceFromPlayer < detectrange && distanceFromPlayer > attack_range && if_die == false&& roomIndex==PlayerManager.GetInstance().roomIndex)
+        {
+            if (if_attack == true)
+            {
                 print(1);
-                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             }
-            else{
+            else
+            {
                 rotation();
-                transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed*Time.deltaTime);
+                transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
                 _animator.SetTrigger("move");
             }
-
         }
-        else if (distanceFromPlayer <= attack_range && if_die == false){
-            int attack_ram = Random.Range(1,3);
-            if (attack_ram == 1){
+        else if (distanceFromPlayer <= attack_range && if_die == false)
+        {
+            int attack_ram = Random.Range(1, 3);
+            if (attack_ram == 1)
+            {
                 _animator.SetTrigger("attack1");
             }
-            else{
+            else
+            {
                 _animator.SetTrigger("attack2");
             }
         }
-        else{
+        else
+        {
             _animator.SetTrigger("idle");
         }
     }
+
+    private void GoDie()
+    {
+        if (roomIndex == 1)
+        {
+            if (PlayerManager.GetInstance().enemys001.Contains(gameObject.GetComponent<SpriteRenderer>()))
+            {
+                PlayerManager.GetInstance().enemys001.Remove(gameObject.GetComponent<SpriteRenderer>());
+                if (PlayerManager.GetInstance().enemys001.Count == 0)
+                {
+                    Debug.Log("room 1 enemy clear!");
+                    //µôÂäµÀ¾ß
+                    PlayerManager.GetInstance().GetItems(transform.position);
+                }
+            }
+        }
+        if (roomIndex == 2)
+        {
+            if (PlayerManager.GetInstance().enemys002.Contains(gameObject.GetComponent<SpriteRenderer>()))
+            {
+                PlayerManager.GetInstance().enemys002.Remove(gameObject.GetComponent<SpriteRenderer>());
+                if (PlayerManager.GetInstance().enemys002.Count == 0)
+                {
+                    Debug.Log("room 2 enemy clear!");
+                    PlayerManager.GetInstance().GetItems(transform.position);
+                }
+            }
+        }
+        Destroy(this.gameObject);
+    }
+
     void rotation(){
         if (player.transform.position.x-transform.position.x <= 0){
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
@@ -123,8 +143,5 @@ public class meleeenemy : MonoBehaviour
         float hypotenuse = Mathf.Sqrt(x_distance*x_distance + y_distance*y_distance);
         Vector2 Knockback = new Vector2(5*(this.transform.position.x - x_distance/hypotenuse), 5*(this.transform.position.y -y_distance/hypotenuse));
         transform.position = Vector2.MoveTowards(this.transform.position, Knockback, 15*Time.deltaTime); 
-    }
-    void destroy_enemy(){
-        Destroy(gameObject);
     }
 }

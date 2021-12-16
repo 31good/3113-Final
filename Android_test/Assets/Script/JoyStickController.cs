@@ -5,11 +5,11 @@ using UnityEngine;
 public class JoyStickController : MonoBehaviour
 {
     public FixedJoystick moveJoystick;
-    public FixedJoystick lookJoystick;
+    //public FixedJoystick lookJoystick;
     private float GameObjectRotation;
     public bool FacingRight =true;
     Transform weapon;
-    bool isRotating=false;
+
     public float speed=5;
     private BoxCollider2D boxCollider;
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class JoyStickController : MonoBehaviour
             }
         }
         UpdateMoveJoystick();
-        UpdateLookJoystick();
+        //UpdateLookJoystick();
     }
 
     void UpdateMoveJoystick()
@@ -61,45 +61,32 @@ public class JoyStickController : MonoBehaviour
             Vector2 convertedXY = ConvertWithCamera(Camera.main.transform.position, hoz, ver);
             direction = new Vector3(Camera.main.transform.position.x,convertedXY.y, 0).normalized;
         }*/
-        if(hoz<0&&FacingRight&&!isRotating){Flip();}
-        if(hoz>0&&!FacingRight&&!isRotating){Flip();}
+        if(hoz<0&&FacingRight){Flip();}
+        if(hoz>0&&!FacingRight){Flip();}
         //transform.Translate(direction * 0.02f, Space.World);
     }
 
 
 
-    void UpdateLookJoystick()
+    /*void UpdateLookJoystick()
     {
         float hoz = lookJoystick.Horizontal;
         float ver = lookJoystick.Vertical;
-        //print(hoz);
-        //print(ver);
-        if(hoz<0&&FacingRight&&!isRotating){
+        if(FacingRight){
+            GameObjectRotation=hoz+ver*90;
+            weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation);
+        }
+        else{
+            GameObjectRotation=hoz+ver*-90;
+            weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation); 
+        }
+        if(hoz<0&&FacingRight){
             Flip();
         }
-        else if(hoz>0&&!FacingRight&&!isRotating){
+        else if(hoz>0&&!FacingRight){
             Flip();
         }
-        if(Mathf.Abs(hoz)>=0.2||Mathf.Abs(ver)>=0.2){
-            if(FacingRight){
-                //GameObjectRotation=hoz+ver*90;
-                //print(GameObjectRotation);
-                float degrees = Mathf.Rad2Deg*(Mathf.Atan2(ver,hoz));
-                print(degrees);
-                StartCoroutine(Rotate(degrees,1));
-                //print(GameObjectRotation);
-                //weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation);
-            }
-            else{
-                //GameObjectRotation=hoz+ver*-90;
-                //print(GameObjectRotation);
-                float degrees = Mathf.Rad2Deg*(Mathf.Atan2(ver,hoz));
-                print(degrees);
-                StartCoroutine(Rotate(degrees,1.3f));
-                //weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation); 
-            }
-        }
-    }
+    }*/
 
     private void Flip()
 	{
@@ -107,7 +94,6 @@ public class JoyStickController : MonoBehaviour
 		FacingRight = !FacingRight;
 
 		transform.Rotate(0, 180, 0);
-        weapon.gameObject.transform.Rotate(0, 180, 0);
 	}
 
     private Vector2 ConvertWithCamera(Vector3 cameraPos, float hor, float ver)
@@ -128,45 +114,4 @@ public class JoyStickController : MonoBehaviour
         float _y = v.x * Mathf.Sin(radian) + v.y * Mathf.Cos(radian);
         return new Vector2(_x, _y);
     }
-
-
-    private IEnumerator Rotate(float degrees, float duration)
-    {
-    if(isRotating) yield break;
-    isRotating = true;
-
-    float passedTime = 0f;
-    //print(degrees+15-135);
-    //print(degrees-15-135);
-    var startRotation = Quaternion.Euler(0f,0f,degrees +35);
-    var targetRotation = Quaternion.Euler(0, 0, degrees-35);
-
-    while(passedTime < duration)
-        {
-        // this will always be a linear value between 0 and 1
-        var lerpFactor = passedTime / duration;
-        //optionally you can add ease-in and ease-out
-        //lerpFactor = Mathf.SmoothStep(0, 1, lerFactor);
-
-        // This rotates linear 
-        //weapon.transform.rotation = Quaternion.Lerp(startRotation, targetRotation, lerpFactor);
-        // OR This already rotates smoothed using a spherical interpolation
-        weapon.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, lerpFactor);
-
-        // Here you see it is again - Time.deltaTime
-        // increase the passedTime by the time passed since last frame
-        // to avoid overshooting we clamp it
-        passedTime += Mathf.Min(duration - passedTime, Time.deltaTime);
-
-        // yield in a Coroutine reads like
-        // pause here, render this frame and continue from here in the next frame
-        yield return null;
-        }
-
-    // just to be sure
-    weapon.transform.rotation = targetRotation;
-
-    isRotating = false;
-    }
-    
 }
