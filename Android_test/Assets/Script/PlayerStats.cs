@@ -22,8 +22,11 @@ public class PlayerStats : MonoBehaviour
     private Vector3 pre_position;
     public float damage_add = 0;
     public float stack_speed = 0;
+     public AudioSource coinSound;
+ public AudioSource keySound;
+ public AudioSource chestSound;
+ public AudioSource doorSound;
     public static PlayerStats Instance
-
     {
         get
         {
@@ -127,18 +130,22 @@ public class PlayerStats : MonoBehaviour
         }
         if(other.gameObject.tag=="key"){
             key_count+=1;
+            keySound.Play();
             Destroy(other.gameObject);
         }
 
         if(other.gameObject.tag=="coin"){
             coin_count+=1;
+            coinSound.Play();
             Destroy(other.gameObject);
+
         }
         if(other.gameObject.tag == "shop"){
             shop = other.gameObject;
         }
         if(other.gameObject.tag == "Chest"){
             chest = other.gameObject;
+            chestSound.Play();
         }
         if(other.gameObject.tag == "pet1"){
             Instantiate(pet1);

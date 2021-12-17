@@ -11,6 +11,7 @@ public class Mantle : MonoBehaviour {
 
     void Start()
     {
+        Debug.Log(name);
         _defCoords = transform.localPosition;
         _playerRig = _player.gameObject.GetComponent<Rigidbody2D>();
     }
