@@ -31,7 +31,6 @@ public class HealthBarController : MonoBehaviour
 
     void SetHeartContainers()
     {
-        print(heartContainers.Length);
         for (int i = 0; i < heartContainers.Length; i++)
         {
             if (i < PlayerStats.Instance.MaxHealth)

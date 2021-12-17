@@ -23,7 +23,7 @@ public class shop : MonoBehaviour
             }
             count +=1;
         }
-        foreach(Transform child in this.transform){
+        foreach(Transform child in item.transform){
             if(child.tag == "introduction"){
                 introduction = child.gameObject;
             }
@@ -36,12 +36,13 @@ public class shop : MonoBehaviour
         
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag == "player"){
+        if(other.tag == "Player"){
+            print("shop");
             introduction.SetActive(true);
         } 
     }
     private void OnTriggerExit2D(Collider2D other) {
-        if(other.tag == "player"){
+        if(other.tag == "Player"){
             introduction.SetActive(false);
         }
     }
