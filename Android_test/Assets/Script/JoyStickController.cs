@@ -173,18 +173,18 @@ public class JoyStickController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag == "shop"||other.tag=="box"){
+        if(other.tag == "shop"||other.tag=="Chest"){
             interaction_button.gameObject.SetActive(true);
         } 
     }
 
     private void OnTriggerstay2D(Collider2D other) {
-        if(other.tag == "shop"||other.tag=="box"){
+        if(other.tag == "shop"||other.tag=="Chest"){
             interaction_button.gameObject.SetActive(true);
         } 
     }
     private void OnTriggerExit2D(Collider2D other) {
-        if(other.tag == "shop"||other.tag=="box"){
+        if(other.tag == "shop"||other.tag=="Chest"){
             interaction_button.gameObject.SetActive(false);
         }
     }
