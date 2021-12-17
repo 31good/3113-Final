@@ -151,15 +151,19 @@ public class PlayerStats : MonoBehaviour
         }
         if(other.gameObject.tag == "pet1"){
             Instantiate(pet1);
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "pet2"){
             Instantiate(pet2);
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "skill1"){
             AddHealth();
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "skill2"){
             damage_add+=3;
+            Destroy(other.gameObject);
         }
     }
     void Start ()
