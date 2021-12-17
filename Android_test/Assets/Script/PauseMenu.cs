@@ -28,7 +28,10 @@ public class PauseMenu : MonoBehaviour
     void StartAllAudio() {
         allAudioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
         foreach( AudioSource audioS in allAudioSources) {
-            audioS.Play();
+            if (audioS.name=="BGAudioClip"){
+                 audioS.Play();
+            }
+           
         }
     }
     // Start is called before the first frame update
@@ -49,7 +52,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Home(){
-        
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
  
