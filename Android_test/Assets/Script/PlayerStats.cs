@@ -15,8 +15,13 @@ public class PlayerStats : MonoBehaviour
     public AnimationClip _walk;
     public Animation _Legs;
     public GameObject hit_body;
+    public Transform pet_trans;
+    public GameObject pet1;
+    public GameObject pet2;
     private Rigidbody2D rig;
     private Vector3 pre_position;
+    public float damage_add = 0;
+    public float stack_speed = 0;
     public static PlayerStats Instance
 
     {
@@ -44,8 +49,9 @@ public class PlayerStats : MonoBehaviour
     public int key_count=0;
     public TextMeshProUGUI coin_count_text;
     public int coin_count=0;
-    public float damage = 10f;
     private bool if_attack = false;
+    private GameObject shop;
+    private GameObject shop_item;
     private void Update() {
         key_count_text.text="x"+key_count;
         coin_count_text.text="x"+coin_count;
@@ -71,10 +77,26 @@ public class PlayerStats : MonoBehaviour
         {
             maxHealth += 1;
             health = maxHealth;
+            if (onHealthChangedCallback != null)
+                onHealthChangedCallback.Invoke();
+        }
+    }
+
+    public void minusHealth()
+    {
+        if (health<=1)
+        {
+            maxHealth -= 1;
 
             if (onHealthChangedCallback != null)
                 onHealthChangedCallback.Invoke();
-        }   
+        }
+        else{
+            maxHealth -= 1;
+            health -=1;
+            if (onHealthChangedCallback != null)
+                onHealthChangedCallback.Invoke();
+        }
     }
 
     void ClampHealth()
@@ -109,6 +131,10 @@ public class PlayerStats : MonoBehaviour
             coin_count+=1;
             Destroy(other.gameObject);
         }
+        if(other.gameObject.tag == "shop"){
+            shop = other.gameObject;
+        }
+
     }
     void Start ()
     {
@@ -127,5 +153,48 @@ public class PlayerStats : MonoBehaviour
     }
     void set_trigger(){
         hit_body.SetActive(false);
+    }
+
+    public void shopping(){
+        shop_item = shop.GetComponent<shop>().item;
+        string type = shop_item.GetComponent<shop_items>().type;
+        int num = shop_item.GetComponent<shop_items>().num;
+        int price = shop_item.GetComponent<shop_items>().price;
+        if(coin_count >= price){
+            coin_count-= price;
+            if(type == "health"){
+                if(Health<maxHealth){Heal(1f);}
+            }
+            if(type == "weapon"){
+                this.GetComponent<JoyStickController>().swap_weapon(num);
+            }
+            if(type == "pet"){
+                if(num ==1){
+                    Instantiate(pet1);
+                }
+                if(num==2){
+                    Instantiate(pet2);
+                }
+            }
+            if(type == "skill"){
+                if(num ==1){
+                    AddHealth();
+                }
+                if(num ==2){
+                    damage_add+=3;
+                }
+                if(num ==3){
+                    stack_speed += 0.05f;
+                }
+                if(num ==4){
+                    damage_add+=5;
+                    minusHealth();
+                }
+                if(num ==5){
+                    this.GetComponent<JoyStickController>().speed +=1;
+                }
+            }
+            shop_item.SetActive(false);
+        }
     }
 }

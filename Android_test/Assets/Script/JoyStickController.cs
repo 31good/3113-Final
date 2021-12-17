@@ -177,9 +177,31 @@ public class JoyStickController : MonoBehaviour
             interaction_button.gameObject.SetActive(true);
         } 
     }
+
+    private void OnTriggerstay2D(Collider2D other) {
+        if(other.tag == "shop"||other.tag=="box"){
+            interaction_button.gameObject.SetActive(true);
+        } 
+    }
     private void OnTriggerExit2D(Collider2D other) {
         if(other.tag == "shop"||other.tag=="box"){
             interaction_button.gameObject.SetActive(false);
+        }
+    }
+
+    public void swap_weapon(int num){
+        foreach(Transform child in this.transform){
+            if(child.tag=="Weapon"){
+                child.gameObject.SetActive(true);
+                print("weapon"+num);
+                if(child.GetComponent<weapon_code>().weapon_id == num){
+                    child.gameObject.SetActive(true);
+                    print("weapon1");
+                }
+                else{
+                    child.gameObject.SetActive(false);
+                }   
+            }
         }
     }
 }
