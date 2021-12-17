@@ -31,9 +31,12 @@ public class rangeenemy : MonoBehaviour
         health -= damage;
         Knockback();
         _animator.SetTrigger("hit");
-     }
+    }
     void Update()
     {   
+        if (health<=0){
+            GoDie();
+        }
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
         if(distanceFromPlayer < detectrange&&distanceFromPlayer > shootingrange){
             if(if_attack == true){
@@ -53,6 +56,11 @@ public class rangeenemy : MonoBehaviour
             _animator.SetTrigger("idle");
         }
 
+    }
+
+    private void GoDie()
+    {
+        Destroy(this.gameObject);
     }
     void shoot1(){
         Instantiate(bullet, curr_bullet_pos.transform.position, Quaternion.identity);
@@ -83,7 +91,7 @@ public class rangeenemy : MonoBehaviour
         float x_distance = player.position.x - this.transform.position.x;
         float y_distance = player.position.y - this.transform.position.y;
         float hypotenuse = Mathf.Sqrt(x_distance*x_distance + y_distance*y_distance);
-        Vector2 Knockback = new Vector2(5*(this.transform.position.x - x_distance/hypotenuse), 5*(this.transform.position.y -y_distance/hypotenuse));
-        transform.position = Vector2.MoveTowards(this.transform.position, Knockback, 15*Time.deltaTime); 
+        Vector2 Knockback = new Vector2(10*((this.transform.position.x - x_distance)/hypotenuse), 10*((this.transform.position.y-y_distance)/hypotenuse));
+        transform.position = Vector2.MoveTowards(this.transform.position, Knockback, 5f*Time.deltaTime); 
     }
 }

@@ -22,4 +22,10 @@ public class bulletscrip : MonoBehaviour
     {
         
     }
+    void OnTriggerEnter2D(Collider2D other){
+        if(other.tag == "Player"){
+            other.GetComponent<PlayerStats>().TakeDamage(0.5f);
+            Destroy(this.gameObject);
+        }
+    }
 }

@@ -52,6 +52,7 @@ public class PlayerStats : MonoBehaviour
     private bool if_attack = false;
     private GameObject shop;
     private GameObject shop_item;
+    public GameObject skillUI;
     private void Update() {
         key_count_text.text="x"+key_count;
         coin_count_text.text="x"+coin_count;
@@ -192,6 +193,11 @@ public class PlayerStats : MonoBehaviour
                 }
                 if(num ==5){
                     this.GetComponent<JoyStickController>().speed +=1;
+                }
+                foreach(Transform child in skillUI.transform){
+                    if(child.GetComponent<UI_skill>().skill_num == num){
+                        child.gameObject.SetActive(true);
+                    }
                 }
             }
             shop_item.SetActive(false);
