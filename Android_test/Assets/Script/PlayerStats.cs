@@ -129,6 +129,8 @@ public class PlayerStats : MonoBehaviour
             Destroy(other.gameObject);
         }
         if(other.gameObject.tag=="key"){
+        Debug.Log(other.name);
+
             key_count+=1;
             keySound.Play();
             Destroy(other.gameObject);
