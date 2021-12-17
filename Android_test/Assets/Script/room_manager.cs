@@ -53,7 +53,7 @@ public class room_manager : MonoBehaviour
         door2.SetActive(false);
         door3.SetActive(false);
         door4.SetActive(false);
-        Portal.SetActive(false);
+        Portal.SetActive(true);
     }
 
     void set_true(){
@@ -61,6 +61,6 @@ public class room_manager : MonoBehaviour
         door2.SetActive(true);
         door3.SetActive(true);
         door4.SetActive(true);
-        Portal.SetActive(true);
+        Portal.SetActive(false);
     }
 }
