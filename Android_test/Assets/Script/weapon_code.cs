@@ -11,7 +11,7 @@ public class weapon_code : MonoBehaviour
     private float final_damage;
     private float final_span;
     public int weapon_id;
-
+    public AudioSource weaponSound;
     public float attack_span = 0.5f;
     // Start is called before the first frame update
     void Start()
@@ -41,23 +41,27 @@ public class weapon_code : MonoBehaviour
         if(other.gameObject.tag == "melee_enemy" && is_attacking == true && if_damage == false){
             other.gameObject.GetComponent<meleeenemy>().taken_damage(final_damage);
             if_damage = true;
+            weaponSound.Play();
             Invoke("offset_if_damage",final_span);
             print("12345");
         }
         if(other.gameObject.tag == "range_enemy" && is_attacking == true && if_damage == false){
             other.gameObject.GetComponent<rangeenemy>().taken_damage(final_damage);
             if_damage = true;
+            weaponSound.Play();
         }
     }
     private void OnTriggerStay2D(Collider2D other) {
         if(other.gameObject.tag == "melee_enemy" && is_attacking == true && if_damage == false){
             other.gameObject.GetComponent<meleeenemy>().taken_damage(final_damage);
             if_damage = true;
+            weaponSound.Play();
             print("12345");
         }
         if(other.gameObject.tag == "range_enemy" && is_attacking == true && if_damage == false){
             other.gameObject.GetComponent<rangeenemy>().taken_damage(final_damage);
             if_damage = true;
+            weaponSound.Play();
         }
     }
     private void offset_if_damage(){
