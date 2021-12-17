@@ -49,7 +49,6 @@ public class PlayerStats : MonoBehaviour
     private void Update() {
         key_count_text.text="x"+key_count;
         coin_count_text.text="x"+coin_count;
-        hit_body.SetActive(false);
     }
 
     public void Heal(float health)
@@ -61,6 +60,7 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage(float dmg)
     {   
         hit_body.SetActive(true);
+        Invoke("set_trigger",0.5f);
         health -= dmg;
         ClampHealth();
     }
@@ -124,5 +124,8 @@ public class PlayerStats : MonoBehaviour
             _Legs.clip = _walk;
             _Legs.Play();
         }
+    }
+    void set_trigger(){
+        hit_body.SetActive(false);
     }
 }
