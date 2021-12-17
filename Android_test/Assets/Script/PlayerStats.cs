@@ -52,6 +52,8 @@ public class PlayerStats : MonoBehaviour
     private bool if_attack = false;
     private GameObject shop;
     private GameObject shop_item;
+    private GameObject chest;
+    private GameObject chest_item;
     public GameObject skillUI;
     private void Update() {
         key_count_text.text="x"+key_count;
@@ -122,7 +124,6 @@ public class PlayerStats : MonoBehaviour
             Heal(1f);
             Destroy(other.gameObject);
         }
-
         if(other.gameObject.tag=="key"){
             key_count+=1;
             Destroy(other.gameObject);
@@ -135,7 +136,21 @@ public class PlayerStats : MonoBehaviour
         if(other.gameObject.tag == "shop"){
             shop = other.gameObject;
         }
-
+        if(other.gameObject.tag == "Chest"){
+            chest = other.gameObject;
+        }
+        if(other.gameObject.tag == "pet1"){
+            Instantiate(pet1);
+        }
+        if(other.gameObject.tag == "pet2"){
+            Instantiate(pet2);
+        }
+        if(other.gameObject.tag == "skill1"){
+            AddHealth();
+        }
+        if(other.gameObject.tag == "skill2"){
+            damage_add+=3;
+        }
     }
     void Start ()
     {
@@ -201,6 +216,13 @@ public class PlayerStats : MonoBehaviour
                 }
             }
             shop_item.SetActive(false);
+        }
+    }
+    public void open_chest(){
+        if(key_count>=1){
+            print("chest1");
+            key_count-=1;
+            chest.gameObject.GetComponent<chest>().open_chest();
         }
     }
 }
