@@ -5,6 +5,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class PlayerStats : MonoBehaviour
 {
     public delegate void OnHealthChangedDelegate();
@@ -179,6 +180,10 @@ public class PlayerStats : MonoBehaviour
             print("walk");
             _Legs.clip = _walk;
             _Legs.Play();
+        }
+        if (health <=0){
+            Destroy(gameObject);
+            SceneManager.LoadScene("Die");
         }
     }
     void set_trigger(){
