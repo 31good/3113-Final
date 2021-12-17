@@ -175,6 +175,12 @@ public class JoyStickController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "shop"||other.tag=="Chest"){
             interaction_button.gameObject.SetActive(true);
+            if(other.tag=="shop"){
+                gameObject.GetComponent<PlayerStats>().if_shopping = true;
+            }
+            else{
+                gameObject.GetComponent<PlayerStats>().if_shopping = false;
+            }
         } 
     }
 

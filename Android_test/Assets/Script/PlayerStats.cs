@@ -55,6 +55,7 @@ public class PlayerStats : MonoBehaviour
     private GameObject chest;
     private GameObject chest_item;
     public GameObject skillUI;
+    public bool if_shopping = true;
     private void Update() {
         key_count_text.text="x"+key_count;
         coin_count_text.text="x"+coin_count;
@@ -171,8 +172,9 @@ public class PlayerStats : MonoBehaviour
         hit_body.SetActive(false);
     }
 
-    public void shopping(){
-        shop_item = shop.GetComponent<shop>().item;
+    public void shopping_chest(){
+        if(if_shopping){
+            shop_item = shop.GetComponent<shop>().item;
         string type = shop_item.GetComponent<shop_items>().type;
         int num = shop_item.GetComponent<shop_items>().num;
         int price = shop_item.GetComponent<shop_items>().price;
@@ -216,13 +218,14 @@ public class PlayerStats : MonoBehaviour
                 }
             }
             shop_item.SetActive(false);
+            }
         }
-    }
-    public void open_chest(){
-        if(key_count>=1){
-            print("chest1");
-            key_count-=1;
-            chest.gameObject.GetComponent<chest>().open_chest();
+        else{
+            if(key_count>=1){
+                key_count-=1;
+                chest.gameObject.GetComponent<chest>().open_chest();
+            }
         }
+        
     }
 }
