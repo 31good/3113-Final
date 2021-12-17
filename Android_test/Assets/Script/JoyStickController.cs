@@ -20,6 +20,10 @@ public class JoyStickController : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
     }
     
+    void Awake(){
+        DontDestroyOnLoad(transform.gameObject);
+    }
+
     void Update()
     {
         print(isRotating);
