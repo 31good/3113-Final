@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class JoyStickController : MonoBehaviour
 {
     public FixedJoystick moveJoystick;
@@ -13,6 +13,8 @@ public class JoyStickController : MonoBehaviour
     public float speed=5;
     private BoxCollider2D boxCollider;
     public float attack_span;
+
+    public Button interaction_button;
     // Update is called once per frame
     private void Start(){
         boxCollider = GetComponent<BoxCollider2D>();
@@ -169,5 +171,15 @@ public class JoyStickController : MonoBehaviour
     weapon.transform.rotation = targetRotation;
     isRotating = false;
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.tag == "shop"||other.tag=="box"){
+            interaction_button.gameObject.SetActive(true);
+        } 
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+        if(other.tag == "shop"||other.tag=="box"){
+            interaction_button.gameObject.SetActive(false);
+        }
+    }
 }
