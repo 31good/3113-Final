@@ -12,6 +12,7 @@ public class JoyStickController : MonoBehaviour
     public bool isRotating=false;
     public float speed=5;
     private BoxCollider2D boxCollider;
+    public float attack_span;
     // Update is called once per frame
     private void Start(){
         boxCollider = GetComponent<BoxCollider2D>();
@@ -22,8 +23,10 @@ public class JoyStickController : MonoBehaviour
         print(isRotating);
         foreach(Transform child in this.transform){
             //print(child.tag);
-            if(child.tag=="Weapon"){
+            if(child.tag=="Weapon" && child.gameObject.activeSelf == true){
+                print(123);
                 weapon=child;
+                attack_span=weapon.GetComponent<weapon_code>().get_attack_span();   
             }
         }
         UpdateMoveJoystick();
@@ -86,7 +89,7 @@ public class JoyStickController : MonoBehaviour
                 //GameObjectRotation=hoz+ver*90;
                 //print(GameObjectRotation);
                 float degrees = Mathf.Rad2Deg*(Mathf.Atan2(ver,hoz));
-                StartCoroutine(Rotate(degrees,0.4f));
+                StartCoroutine(Rotate(degrees,attack_span));
                 //print(GameObjectRotation);
                 //weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation);
             }
@@ -94,7 +97,7 @@ public class JoyStickController : MonoBehaviour
                 //GameObjectRotation=hoz+ver*-90;
                 //print(GameObjectRotation);
                 float degrees = Mathf.Rad2Deg*(Mathf.Atan2(ver,hoz));
-                StartCoroutine(Rotate(degrees,0.4f));
+                StartCoroutine(Rotate(degrees,attack_span));
                 //weapon.rotation=Quaternion.Euler(0f,0f,GameObjectRotation); 
             }
         }

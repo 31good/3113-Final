@@ -6,20 +6,22 @@ public class weapon_code : MonoBehaviour
 {
     private GameObject player;
     private bool is_attacking;
-    private float damage;
+    public float damage = 10;
     private bool if_damage = false;
+
+    public float attack_span = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        damage = player.GetComponent<PlayerStats>().damage;
         is_attacking = player.GetComponent<JoyStickController>().isRotating;
     }
-
+    public float get_attack_span(){
+        return attack_span;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-        damage = player.GetComponent<PlayerStats>().damage;
         is_attacking = player.GetComponent<JoyStickController>().isRotating;
         if(is_attacking == false){
             if_damage =false;
