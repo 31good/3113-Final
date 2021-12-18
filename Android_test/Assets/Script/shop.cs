@@ -9,9 +9,11 @@ public class shop : MonoBehaviour
     public GameObject player;
     public string type = null;
     private int random_num;
+
+    public bool shopped=false;
     void Start()
     {
-        random_num = Random.Range(0,14);
+        random_num = Random.Range(0,13);
         int count = 0;
         foreach(Transform child in this.transform){
             if(count == random_num){
