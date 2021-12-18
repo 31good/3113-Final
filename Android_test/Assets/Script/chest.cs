@@ -10,6 +10,9 @@ public class chest : MonoBehaviour
     public Sprite openbox;
     public string type = null;
     private int random_num;
+
+    public bool notopen=true;
+    public AudioSource open;
     void Start()
     {
     }
@@ -20,6 +23,7 @@ public class chest : MonoBehaviour
         
     }
     public void open_chest(){
+        open.Play();
         random_num = Random.Range(0,14);
         int count = 0;
         foreach(Transform child in this.transform){
@@ -32,7 +36,8 @@ public class chest : MonoBehaviour
             }
             count +=1;
         }
-        print("chest");
+        //print("chest");
         gameObject.GetComponent<SpriteRenderer>().sprite = openbox;
+        notopen=false;
     }
 }

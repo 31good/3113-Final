@@ -57,7 +57,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void Restart(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        donotdestory[] yourObjects = FindObjectsOfType<donotdestory>();
+        foreach (var thing in yourObjects){
+            Destroy(thing.gameObject);
+        }
+        SceneManager.LoadScene(1);
+    Resume();
     }
 
     public void Quit(){

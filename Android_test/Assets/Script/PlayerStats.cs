@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 public class PlayerStats : MonoBehaviour
 {
+    public Button interact_button;
     public delegate void OnHealthChangedDelegate();
     public OnHealthChangedDelegate onHealthChangedCallback;
 
@@ -25,7 +26,6 @@ public class PlayerStats : MonoBehaviour
     public float stack_speed = 0;
      public AudioSource coinSound;
  public AudioSource keySound;
- public AudioSource chestSound;
  public AudioSource doorSound;
     public static PlayerStats Instance
     {
@@ -148,7 +148,6 @@ public class PlayerStats : MonoBehaviour
         }
         if(other.gameObject.tag == "Chest"){
             chest = other.gameObject;
-            chestSound.Play();
         }
         if(other.gameObject.tag == "pet1"){
             Instantiate(pet1);
@@ -191,6 +190,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     public void shopping_chest(){
+        interact_button.gameObject.SetActive(false);
         if(if_shopping){
             shop_item = shop.GetComponent<shop>().item;
         string type = shop_item.GetComponent<shop_items>().type;
@@ -236,6 +236,7 @@ public class PlayerStats : MonoBehaviour
                 }
             }
             shop_item.SetActive(false);
+            Destroy(shop);
             }
         }
         else{

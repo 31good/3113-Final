@@ -14,6 +14,7 @@ public class JoyStickController : MonoBehaviour
     private BoxCollider2D boxCollider;
     public float attack_span;
 
+    public AudioSource wave;
     public Button interaction_button;
     // Update is called once per frame
     private void Start(){
@@ -148,7 +149,7 @@ public class JoyStickController : MonoBehaviour
     //print(degrees-15-135);
     var startRotation = Quaternion.Euler(0f,0f,degrees +80);
     var targetRotation = Quaternion.Euler(0f, 0f, degrees-80);
-
+    wave.Play();
     while(passedTime < duration)
         {
         // this will always be a linear value between 0 and 1
@@ -178,11 +179,12 @@ public class JoyStickController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "shop"||other.tag=="Chest"){
-            interaction_button.gameObject.SetActive(true);
             if(other.tag=="shop"){
+                interaction_button.gameObject.SetActive(true);
                 gameObject.GetComponent<PlayerStats>().if_shopping = true;
             }
             else{
+                if(other.gameObject.GetComponent<chest>().notopen==true)interaction_button.gameObject.SetActive(true);
                 gameObject.GetComponent<PlayerStats>().if_shopping = false;
             }
         } 
@@ -190,6 +192,7 @@ public class JoyStickController : MonoBehaviour
 
     private void OnTriggerstay2D(Collider2D other) {
         if(other.tag == "shop"||other.tag=="Chest"){
+            if(other.tag=="Chest"&&other.gameObject.GetComponent<chest>().notopen==true)interaction_button.gameObject.SetActive(true);
             interaction_button.gameObject.SetActive(true);
         } 
     }
