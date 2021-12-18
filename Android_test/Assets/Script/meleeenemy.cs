@@ -104,7 +104,22 @@ public class meleeenemy : MonoBehaviour
             player.GetComponent<PlayerStats>().TakeDamage(0.5f);
             if_do_damage = true;
         }
+        /*
+        if(other.tag=="wall"){
+            var magnitude = 5; 
+            var force = transform.position - other.transform.position;
+            print(force);
+            GetComponent<Rigidbody2D> ().AddForce (force * magnitude);
+        }
+        */
     }
+
+/*    private void OnTriggerExit2D(Collider2D other){
+        if(other.tag=="wall"){
+            print(true);
+            GetComponent<Rigidbody2D>().velocity=Vector2.zero;
+        }
+    }*/
 
     private void OnTriggerStay2D(Collider2D other){
         if(if_attack == true && if_do_damage == false && could_damage == true && other.gameObject.tag == "Player"){
