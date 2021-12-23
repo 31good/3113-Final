@@ -6,7 +6,7 @@ public class dontdestroy : MonoBehaviour
 {
      void Awake()
      {
-         DontDestroyOnLoad(transform.gameObject);
+         DontDestroyOnLoad(this.gameObject);
     }
     // Start is called before the first frame update
     void Start()

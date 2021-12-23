@@ -31,8 +31,8 @@ public class JoyStickController : MonoBehaviour
         foreach(Transform child in this.transform){
             //print(child.tag);
             if(child.tag=="Weapon" && child.gameObject.activeSelf == true){
-                print(123);
                 weapon=child;
+                print(child.tag);
                 attack_span=weapon.GetComponent<weapon_code>().get_attack_span();   
             }
         }
